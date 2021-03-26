@@ -23,6 +23,11 @@ async def on_guild_join(guild):
     show_server_list()
 
 
+@bot.command()
+async def dm(ctx, member: discord.Member, *, content: str):
+    await member.send(content)
+
+
 @bot.event  # Event bot exit from guild
 async def on_guild_remove(guild):
     show_server_list()
@@ -31,5 +36,4 @@ async def on_guild_remove(guild):
 if __name__ == "__main__":
     with open("token.txt", "r") as token_file:
         token = token_file.read()
-
 bot.run(token)
