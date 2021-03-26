@@ -1,0 +1,2 @@
+# Terminator
+Terminator discord bot
