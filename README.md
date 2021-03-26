@@ -1,2 +1,4 @@
-# Terminator
-Terminator discord bot
+# :gun: Terminator :robot:
+---
+
+* Discord bot for fun.
