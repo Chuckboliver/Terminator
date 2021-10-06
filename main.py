@@ -1,8 +1,12 @@
 import discord
 import os
-from discord.ext import commands, tasks
 
-bot = commands.Bot(command_prefix="?")
+from discord import client
+from discord.ext import commands, tasks
+from dotenv import load_dotenv
+
+load_dotenv()
+bot = commands.Bot(command_prefix="$")
 
 
 @bot.event
@@ -32,8 +36,13 @@ async def dm(ctx, member: discord.Member, *, content: str):
 async def on_guild_remove(guild):
     show_server_list()
 
+@bot.event
+async def on_voice_state_update(member, before, after):
+    if before.channel is None or after.channel is not None:
+        if after.channel.id == 702116420753948672:
+            ch = discord.utils.get(member.guild.text_channels, name='ดู-ส้มตำ-v2')
+            await ch.send("Hey!")
 
 if __name__ == "__main__":
-    with open("token.txt", "r") as token_file:
-        token = token_file.read()
+    token = os.getenv("TOKEN")
 bot.run(token)
