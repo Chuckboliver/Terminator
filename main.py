@@ -8,7 +8,6 @@ from dotenv import load_dotenv
 load_dotenv()
 bot = commands.Bot(command_prefix="$")
 
-
 @bot.event
 async def on_ready():
     print("Started!!!")
@@ -43,6 +42,11 @@ async def on_voice_state_update(member, before, after):
             ch = discord.utils.get(member.guild.text_channels, name='ดู-ส้มตำ-v2')
             await ch.send("Hey!")
 
+
+@bot.command()
+async def clear(ctx, *, content: int):
+    deleted = await ctx.message.channel.purge(limit=content)
+    await ctx.message.channel.send('Deleted {} message(s)'.format(len(deleted)),delete_after=3)
+
 if __name__ == "__main__":
-    token = os.getenv("TOKEN")
-bot.run(token)
+    bot.run(os.getenv("TOKEN"))
