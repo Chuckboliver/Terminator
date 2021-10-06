@@ -2,6 +2,7 @@ import discord
 import os
 from discord.ext import commands, tasks
 from dotenv import load_dotenv
+
 load_dotenv()
 
 bot = commands.Bot(command_prefix="?")
@@ -33,6 +34,12 @@ async def dm(ctx, member: discord.Member, *, content: str):
 @bot.event  # Event bot exit from guild
 async def on_guild_remove(guild):
     show_server_list()
+
+
+@bot.command()
+async def clear(ctx, *, content: int):
+    deleted = await ctx.message.channel.purge(limit=content)
+    await ctx.message.channel.send('Deleted {} message(s)'.format(len(deleted)),delete_after=3)
 
 
 # if __name__ == "__main__":
