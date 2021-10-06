@@ -1,12 +1,12 @@
 import discord
 import os
+
+from discord import client
 from discord.ext import commands, tasks
 from dotenv import load_dotenv
 
 load_dotenv()
-
-bot = commands.Bot(command_prefix="?")
-
+bot = commands.Bot(command_prefix="$")
 
 @bot.event
 async def on_ready():
@@ -35,15 +35,18 @@ async def dm(ctx, member: discord.Member, *, content: str):
 async def on_guild_remove(guild):
     show_server_list()
 
+@bot.event
+async def on_voice_state_update(member, before, after):
+    if before.channel is None or after.channel is not None:
+        if after.channel.id == 702116420753948672:
+            ch = discord.utils.get(member.guild.text_channels, name='ดู-ส้มตำ-v2')
+            await ch.send("Hey!")
+
 
 @bot.command()
 async def clear(ctx, *, content: int):
     deleted = await ctx.message.channel.purge(limit=content)
     await ctx.message.channel.send('Deleted {} message(s)'.format(len(deleted)),delete_after=3)
 
-
-# if __name__ == "__main__":
-#     with open("token.txt", "r") as token_file:
-#         token = token_file.read()
-
-bot.run(os.getenv("TOKEN"))
+if __name__ == "__main__":
+    bot.run(os.getenv("TOKEN"))
