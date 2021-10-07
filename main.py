@@ -1,8 +1,11 @@
-import discord
+import discord as dc
 import os
-from discord.ext import commands, tasks
+from discord.ext import commands
+from dotenv import load_dotenv
 
-bot = commands.Bot(command_prefix="?")
+intents = dc.Intents.default()
+intents.members = True
+bot = commands.Bot(command_prefix="?", intents=intents)
 
 
 @bot.event
@@ -24,7 +27,7 @@ async def on_guild_join(guild):
 
 
 @bot.command()
-async def dm(ctx, member: discord.Member, *, content: str):
+async def dm(ctx, member: dc.Member, *, content: str):
     await member.send(content)
 
 
@@ -32,8 +35,7 @@ async def dm(ctx, member: discord.Member, *, content: str):
 async def on_guild_remove(guild):
     show_server_list()
 
-
 if __name__ == "__main__":
-    with open("token.txt", "r") as token_file:
-        token = token_file.read()
-bot.run(token)
+    load_dotenv()
+    token = os.environ.get("TOKEN")
+    bot.run(token)
