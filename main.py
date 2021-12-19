@@ -2,6 +2,7 @@ import discord as dc
 import os
 from discord.ext import commands
 from dotenv import load_dotenv
+from cogs import roshambo
 
 intents = dc.Intents.default()
 intents.members = True
@@ -39,7 +40,6 @@ async def on_voice_state_update(member, before, after):
             ch = dc.utils.get(member.guild.text_channels, name='ดู-ส้มตำ-v2')
             await ch.send("Hey!")
 
-
 @bot.command()
 async def clear(ctx, *, content: int):
     deleted = await ctx.message.channel.purge(limit=content)
@@ -48,4 +48,8 @@ async def clear(ctx, *, content: int):
 if __name__ == "__main__":
     load_dotenv()
     token = os.environ.get("TOKEN")
-    bot.run(token)
+    bot.add_cog(roshambo.Roshambo(bot))
+    try:
+        bot.run(token)
+    except KeyboardInterrupt as err:
+        print(f"Exit success : {err}")
