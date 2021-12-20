@@ -5,6 +5,7 @@ import random
 class GameResultMixin:
     def win():
         pass
+        print("Hello world")
     
     def lose():
         pass
