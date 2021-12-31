@@ -11,7 +11,7 @@ bot = commands.Bot(command_prefix="?", intents=intents)
 
 @bot.event
 async def on_ready():
-    print("Started!!!!")
+    print("Started!!!!!!")
 
 
 def show_server_list():
